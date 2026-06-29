@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri & Muat Naik Fail</title>
+    <title>Galeri Gambar Saya</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,162 +13,71 @@
             text-align: center;
         }
 
-        h1 { color: #333; }
-
-        /* Bahagian Muat Naik */
-        .upload-section {
-            background: white;
-            padding: 20px;
-            max-width: 500px;
-            margin: 20px auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        h1 {
+            color: #333;
         }
 
-        .upload-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .upload-btn:hover { background-color: #2980b9; }
-
-        /* Ruang Paparan Hasil Muat Naik */
-        .preview-container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 15px;
-            background: #fff;
-            border-radius: 8px;
-            display: none; /* Sembunyi jika kosong */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .preview-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .preview-text {
-            text-align: left;
-            background: #eee;
-            padding: 15px;
-            border-left: 5px solid #3498db;
-            white-space: pre-wrap; /* Jaga susunan perenggan teks */
-        }
-
-        /* Susunan Grid Galeri Sedia Ada */
+        /* Susunan "grid" untuk gambar */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 20px auto;
+            padding: 10px;
         }
 
+        /* Hiasan untuk setiap kotak gambar */
         .gallery-item {
             background-color: #fff;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s;
         }
 
-        .gallery-item:hover { transform: scale(1.03); }
-        .gallery-item img { width: 100%; height: 200px; object-fit: cover; }
-        .desc { padding: 15px; font-size: 14px; color: #666; }
+        .gallery-item:hover {
+            transform: scale(1.03); /* Gambar membesar sedikit apabila "hover" */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Memastikan gambar tidak herot (distorted) */
+            display: block;
+        }
+
+        .desc {
+            padding: 15px;
+            font-size: 14px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Galeri & Sistem Muat Naik</h1>
-    <p>Pilih gambar, dokumen (PDF), atau fail teks (.txt) untuk dipaparkan.</p>
+    <h1>Galeri Gambar Ringkas</h1>
+    <p>Selamat datang ke laman web paparan gambar saya.</p>
 
-    <!-- BAHAGIAN MUAT NAIK -->
-    <div class="upload-section">
-        <h3>Muat Naik Fail Anda</h3>
-        <!-- accept menetapkan jenis fail yang dibenarkan -->
-        <input type="file" id="fileInput" accept="image/*, .txt, .pdf">
-        <br>
-        <button class="upload-btn" onclick="prosesFail()">Papar Fail</button>
-    </div>
-
-    <!-- RUANG PAPARAN HASIL -->
-    <div id="previewContainer" class="preview-container">
-        <h3>Hasil Paparan Fail:</h3>
-        <div id="previewOutput"></div>
-    </div>
-
-    <hr style="border: 1px solid #ddd; margin: 40px 0;">
-
-    <!-- GALERI ASAL -->
-    <h2>Koleksi Gambar Sedia Ada</h2>
     <div class="gallery">
+        <!-- Gambar 1 -->
         <div class="gallery-item">
-            <img src="https://picsum.photos/400/300?random=1" alt="Gambar 1">
-            <div class="desc">Gambar Contoh 1</div>
+            <img src="https://picsum.photos/400/300?random=1" alt="Gambar Rawak 1">
+            <div class="desc">Keterangan Gambar 1</div>
         </div>
+
+        <!-- Gambar 2 -->
         <div class="gallery-item">
-            <img src="https://picsum.photos/400/300?random=2" alt="Gambar 2">
-            <div class="desc">Gambar Contoh 2</div>
+            <img src="https://picsum.photos/400/300?random=2" alt="Gambar Rawak 2">
+            <div class="desc">Keterangan Gambar 2</div>
+        </div>
+
+        <!-- Gambar 3 -->
+        <div class="gallery-item">
+            <img src="https://picsum.photos/400/300?random=3" alt="Gambar Rawak 3">
+            <div class="desc">Keterangan Gambar 3</div>
         </div>
     </div>
-
-    <!-- JAVASCRIPT UNTUK MEMBACA FAIL -->
-    <script>
-        function prosesFail() {
-            const fileInput = document.getElementById('fileInput');
-            const container = document.getElementById('previewContainer');
-            const output = document.getElementById('previewOutput');
-            
-            const file = fileInput.files[0];
-
-            if (!file) {
-                alert("Sila pilih fail terlebih dahulu!");
-                return;
-            }
-
-            // Padam paparan lama jika ada
-            output.innerHTML = "";
-            container.style.display = "block";
-
-            const reader = new FileReader();
-
-            // 1. Jika fail ialah Gambar
-            if (file.type.match('image.*')) {
-                reader.onload = function(e) {
-                    output.innerHTML = `<img src="${e.target.result}" alt="Preview">
-                                        <p><strong>Nama Fail:</strong> ${file.name}</p>`;
-                }
-                reader.readAsDataURL(file);
-            } 
-            // 2. Jika fail ialah Teks (.txt)
-            else if (file.type === "text/plain") {
-                reader.onload = function(e) {
-                    output.innerHTML = `<div class="preview-text">${e.target.result}</div>
-                                        <p><strong>Nama Fail:</strong> ${file.name}</p>`;
-                }
-                reader.readAsText(file);
-            } 
-            // 3. Jika fail ialah PDF
-            else if (file.type === "application/pdf") {
-                reader.onload = function(e) {
-                    // Memaparkan PDF menggunakan tag <iframe>
-                    output.innerHTML = `<iframe src="${e.target.result}" width="100%" height="400px"></iframe>
-                                        <p><strong>Nama Fail:</strong> ${file.name}</p>`;
-                }
-                reader.readAsDataURL(file);
-            } 
-            else {
-                output.innerHTML = `<p style="color:red;">Format fail tidak disokong untuk paparan terus (Hanya imej, .txt, dan .pdf sahaja).</p>`;
-            }
-        }
-    </script>
 
 </body>
 </html>
